@@ -11,6 +11,13 @@ export const getAllTopics = async () => {
   return topics;
 };
 
+export const getAllUsers = async () => {
+  const {
+    data: { users }
+  } = await instance.get("/users/");
+  return users;
+};
+
 export const getArticles = async ( topic, author, sort_by, order) => {
   const { data } = await instance.get("/articles", {
     params: { author, topic, sort_by, order}
@@ -32,16 +39,16 @@ export const getCommentsByArticleId = async (article_id, sort_by, order) => {
   return data.comments;
 };
 
-export const sendArticleVote = async (article_id, vote_inc) => {
+export const sendArticleVote = async (article_id, inc_votes) => {
   const { data } = await instance.patch(`/articles/${article_id}`, {
-    vote_inc
+    inc_votes
   });
   return data;
 };
 
-export const sendCommentVote = async (comment_id, vote_inc) => {
+export const sendCommentVote = async (comment_id, inc_votes) => {
   const { data } = await instance.patch(`/comments/${comment_id}`, {
-    vote_inc
+    inc_votes
   });
   return data;
 };
@@ -51,7 +58,7 @@ export const postComment = async (article_id, username, body) => {
   const { data } = await instance.post(`/articles/${article_id}/comments`, 
     { username, body}
   );
-  return data;
+  return data.comment;
 };
 
 export const deleteComment = async (comment_id) => {

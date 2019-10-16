@@ -12,23 +12,20 @@ class ArticleCard extends Component {
     const {fullCard} = this.state;
     return(
       <>
-       <Link to={`/articles/${article_id}`}> 
-       <p> {title}</p>
+
+      {fullCard? <p>{title}</p>:<Link to={`/articles/${article_id}`}>{title}</Link>}
        <p> {this.props.fullCard?body:bodyStub}</p>
        <p>{author}</p>
        <p>{(new Date(created_at)).toUTCString()}</p>
        <p>topic: {topic}</p>
        {!fullCard&&<p>comments : {comment_count}</p>}
-       </Link>
-       {/* {!fullCard &&  */}
-       <VoterBox item_id={article_id} type_article={true} votes={votes}/>
-
+       {fullCard && this.props.user !== '' ? <VoterBox item_id={article_id} type_article={true} votes={votes}/>: <p>Votes: {votes}</p>}
        </>
     )
   }
 
   componentDidMount() {
-    (this.props.fullcard && this.setState({fullCard: true}))
+    (this.props.fullCard && this.setState({fullCard: true}))
   }
 
   makeBodyStub = (body) => {
@@ -36,6 +33,8 @@ class ArticleCard extends Component {
       return string.length + word.length < 180? string + ' ' + word : string;
   })}...`
   }
+
+  
 
 
 }

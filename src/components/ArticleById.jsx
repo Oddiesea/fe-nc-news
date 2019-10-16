@@ -2,20 +2,22 @@ import React, { Component } from "react";
 import * as api from "../utils/api";
 import ArticleCard from "./ArticleCard";
 import Comments from "./Comments";
-import PostComment from "./PostComment";
+import {errorMiddleware} from "../utils/index"
 
 class ArticleById extends Component {
   state = {
-    article: {}
+    article: {},
+    user: ''
   };
   render() {
+    const { user } = this.props;
     return (
       <div>
         {Object.keys(this.state.article).length !== 0 && (
           <>
-            <ArticleCard article={this.state.article} fullCard={true} />
-            <PostComment article_id={this.props.article_id}/>
-            <Comments article_id={this.props.article_id} />
+            <button onClick={() => window.history.back()}>Back</button>
+            <ArticleCard article={this.state.article} fullCard={true} user={user}/>
+            <Comments article_id={this.props.article_id} user={user}/>
           </>
         )}
       </div>
@@ -23,19 +25,18 @@ class ArticleById extends Component {
   }
 
   componentDidMount() {
+    const { user } = this.props;
     this.fetchArticle();
+    this.setState({user})
   }
-
-//   componentDidUpdate(prevProps) {
-//     if (prevProps.article_id !== this.props.article_id) {
-//       this.fetchArticle(this.props.article_id);
-//     }
-//   }
 
   fetchArticle = async () => {
     const { article_id } = this.props;
-    const article = await api.getArticleById(article_id);
-    this.setState({ article });
+    try {
+      const article = await api.getArticleById(article_id);
+      this.setState({ article });} 
+      catch(error) {errorMiddleware(error)}
+
   };
 }
 

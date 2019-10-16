@@ -2,16 +2,23 @@ import React, { Component } from "react";
 import * as api from "../utils/api";
 import DeleteComment from "./DeleteComment";
 import VoterBox from "./VoterBox";
+import PostComment from "./PostComment";
 
 class Comments extends Component {
   state = {
-    user: "tickle122",
+    user: "",
     comments: [],
     deletedComments: []
   };
   render() {
+    const {user} = this.props;
     return (
       <div>
+        {user !== '' &&(<PostComment
+          article_id={this.props.article_id}
+          handlePostOptimistic={this.handlePostOptimistic}
+          user={user}
+        />)}
         {this.state.comments.map(
           ({ comment_id, created_at, body, author, votes }) => {
             return (
@@ -20,11 +27,10 @@ class Comments extends Component {
                   {body}
                   <p>{author}</p>
                   <p>{new Date(created_at).toUTCString()}</p>
-                  <p>{votes}</p>
-                  {this.state.user !== author ? (
+                  {user !== '' && this.state.user !== author ? (
                     <VoterBox
                       item_id={comment_id}
-                      type_article={true}
+                      type_article={false}
                       votes={votes}
                     />
                   ) : (
@@ -45,12 +51,20 @@ class Comments extends Component {
     );
   }
   componentDidMount() {
+    const {user} = this.props
     this.fetchComments();
+    this.setState({user});
   }
 
   handleDeleteOptimistic = comment_id => {
     this.setState(currentState => {
       return { deletedComments: [...currentState.deletedComments, comment_id] };
+    });
+  };
+
+  handlePostOptimistic = newComment => {
+    this.setState(currentState => {
+      return { comments: [newComment, ...currentState.comments] };
     });
   };
 

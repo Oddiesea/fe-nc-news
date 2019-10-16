@@ -1,12 +1,12 @@
 import React from 'react';
 import {Link} from '@reach/router';
 
-
-const Header = () => {
+const Header = ({user}) => {
     return (
-        <div className="Header">
-            <Link to="/">NC News</Link>
-        </div>
+        <header className="Header">
+            <Link to="/">NC News </Link>
+            {user !== '' ?<> <Link to="#" onClick={() =>this.props.userHandler('')}>Log-Out</Link> <p>Logged in: {user}</p> </> :<> <Link to="/login">Login</Link> </>}
+        </header>
     );
 };
 
