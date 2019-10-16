@@ -8,19 +8,12 @@
 
 .Header {
   grid-area: header;
-  border: solid 2px black;
-  background-color: aquamarine;
-  text-align: center;
-  width: 100vw;
-  /* position: fixed; */
 }
 
 .Nav {
   grid-area: nav;
-  border: solid 2px black;
 }
 
 .MainBody {
   grid-area: mainBody;
-  border: solid 2px black;
 }

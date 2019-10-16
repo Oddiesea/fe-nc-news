@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import * as api from "../utils/api";
+import styled from "styled-components";
 
 class PostComment extends Component {
   state = {
@@ -9,14 +10,22 @@ class PostComment extends Component {
     }
   };
   render() {
+    const Card = styled.div`
+    margin-right: 10px;
+    padding: 5px 10px;
+    margin: 8px 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 2px 2px 2px #D3D3D3;
+  `;
     return (
-      <div className="post-comment">
+      <Card className="post-comment">
         <form onSubmit={this.handleSubmit}>
           <label>
             <input
               onChange={this.handleChange}
               type="text"
-              placeholder="Your text here."
+              placeholder="Leave a comment..."
               name="name"
               value={this.state.newComment.body}
               required
@@ -24,7 +33,7 @@ class PostComment extends Component {
           </label>
           <button className="submit-button">Post Comment</button>
         </form>
-      </div>
+      </Card>
     );
   }
 

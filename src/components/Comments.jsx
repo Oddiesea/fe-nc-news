@@ -3,6 +3,7 @@ import * as api from "../utils/api";
 import DeleteComment from "./DeleteComment";
 import VoterBox from "./VoterBox";
 import PostComment from "./PostComment";
+import styled from 'styled-components';
 
 class Comments extends Component {
   state = {
@@ -11,9 +12,18 @@ class Comments extends Component {
     deletedComments: []
   };
   render() {
+    const Card = styled.div`
+    margin-right: 10px;
+    padding: 5px 10px;
+    margin: 8px 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 2px 2px 2px #D3D3D3;
+  `;
     const {user} = this.props;
     return (
       <div>
+        Comments:
         {user !== '' &&(<PostComment
           article_id={this.props.article_id}
           handlePostOptimistic={this.handlePostOptimistic}
@@ -23,10 +33,10 @@ class Comments extends Component {
           ({ comment_id, created_at, body, author, votes }) => {
             return (
               !this.state.deletedComments.includes(comment_id) && (
-                <li key={`${comment_id}`}>
+                <Card key={`${comment_id}`}>
                   {body}
                   <p>{author}</p>
-                  <p>{new Date(created_at).toUTCString()}</p>
+                  <p>{new Date(created_at).toUTCString().substring(5, 22)}</p>
                   {user !== '' && this.state.user !== author ? (
                     <VoterBox
                       item_id={comment_id}
@@ -42,7 +52,7 @@ class Comments extends Component {
                       handleDeleteOptimistic={this.handleDeleteOptimistic}
                     />
                   )}
-                </li>
+                </Card>
               )
             );
           }
