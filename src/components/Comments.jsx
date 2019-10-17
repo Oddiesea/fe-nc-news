@@ -8,6 +8,7 @@ import styled from 'styled-components';
 class Comments extends Component {
   state = {
     user: "",
+    user_img: "../assets/images/avatar.png",
     comments: [],
     deletedComments: []
   };
