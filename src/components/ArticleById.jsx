@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import * as api from "../utils/api";
 import ArticleCard from "./ArticleCard";
 import Button from "../assets/styles/buttonStyle"
-import Comments from "./Comments";
+import Comments from "./CommentList";
 import {errorMiddleware} from "../utils/index"
 import styled from "styled-components";
 
