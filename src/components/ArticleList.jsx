@@ -13,6 +13,7 @@ class ArticleList extends Component {
       padding-top: 5em;
       padding-left: 1em;
       padding-right: 1em;
+      background: whitesmoke;
     `;
     const SortWrapper = styled.div`
       display: flex;

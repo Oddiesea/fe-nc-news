@@ -3,15 +3,13 @@ import { Link } from "@reach/router";
 import styled from "styled-components";
 
 const Header = ({ user }) => {
-  const Header = styled.section`
+  const Header = styled.header`
     padding: 0.1em;
     background: #17202a;
-    display: inline-grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    text-align: center;
+    display: flex;
+    justify-content: space-around;
     position: fixed;
     top: 0;
-    justify-content: space-between;
     min-width: 100vw;
     border-bottom: 1px solid #ccc;
     box-shadow: 2px 2px 2px #d3d3d3;
@@ -30,11 +28,17 @@ const Header = ({ user }) => {
     }
   `;
 
+  const LoggedIn = styled.p`
+  color: #58D68D;
+  font-size: 0.8em;
+  `
+
   const Login = styled.div`
-  grid-column-start: 3;
+  justify-content: flex-end;
   `
   return (
     <Header className="Header">
+      <p></p>
       <Link to="/">
         <Title>NC News</Title>
       </Link>
@@ -44,7 +48,7 @@ const Header = ({ user }) => {
           <Link to="#" onClick={() => this.props.userHandler("")}>
             Log-Out
           </Link>{" "}
-          <p>Logged in: {user}</p>{" "}
+          <LoggedIn>Logged in: {user}</LoggedIn>{" "}
         </Login>
       ) : (
         <Login>

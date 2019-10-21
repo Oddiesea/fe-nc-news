@@ -1,63 +1,45 @@
 import React, { Component } from "react";
 import * as api from "../utils/api";
-import styled from "styled-components";
+import Card from "../assets/styles/cardStyle"
+import Button from "../assets/styles/buttonStyle"
 
 class PostComment extends Component {
   state = {
-    newComment: {
-      user: "",
-      body: ""
-    }
+    body: ""
   };
   render() {
-    const Card = styled.div`
-    margin-right: 10px;
-    padding: 5px 10px;
-    margin: 8px 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 2px 2px 2px #D3D3D3;
-  `;
     return (
       <Card className="post-comment">
         <form onSubmit={this.handleSubmit}>
           <label>
-            <input
+            <textarea
               onChange={this.handleChange}
-              type="text"
+              rows="4"
+              cols={window.innerWidth < 1040 ? 35 : 80}
               placeholder="Leave a comment..."
               name="name"
-              value={this.state.newComment.body}
+              value={this.state.body}
               required
             />
+          <Button className="submit-button">Post Comment</Button>
           </label>
-          <button className="submit-button">Post Comment</button>
         </form>
       </Card>
     );
   }
 
-  componentDidMount() {
-    const { user } = this.props;
-    this.setState({ newComment: { user } }, () => console.log(this.state));
-  }
-
   handleChange = event => {
     const { value } = event.target;
-    this.setState(currentState => {
-      return {
-        newComment: { ...currentState.newComment, body: value }
-      };
-    });
+    this.setState({body : value});
   };
 
   handleSubmit = async event => {
     event.preventDefault();
-    const { user, body } = this.state.newComment;
-    const { article_id } = this.props;
+    const { body } = this.state;
+    const { article_id, user} = this.props;
     const newComment = await api.postComment(article_id, user, body);
     this.props.handlePostOptimistic(newComment);
-    this.setState({ newComment: { body: "" } });
+    this.setState({body: ''})
   };
 }
 

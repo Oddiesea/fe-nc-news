@@ -1,5 +1,13 @@
 import React, { Component } from "react";
 import * as api from "../utils/api";
+import Button from "../assets/styles/buttonStyle";
+import styled from "styled-components";
+
+const ButtonDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
 
 class VoterBox extends Component {
   state = {
@@ -13,24 +21,26 @@ class VoterBox extends Component {
     return (
       <div>
         Votes: {this.state.votes}
-        <button
-          onClick={
-            this.state.votedUp
-              ? () => this.handleVote(item_id, -1, "votedUp")
-              : () => this.handleVote(item_id, 1, "votedUp")
-          }
-        >
-          Upvote
-        </button>
-        <button
-          onClick={
-            this.state.votedDown
-              ? () => this.handleVote(item_id, 1, "votedDown")
-              : () => this.handleVote(item_id, -1, "votedDown")
-          }
-        >
-          Downvote
-        </button>
+        <ButtonDiv>
+          <Button
+            onClick={
+              this.state.votedUp
+                ? () => this.handleVote(item_id, -1, "votedUp")
+                : () => this.handleVote(item_id, 1, "votedUp")
+            }
+          >
+            Upvote
+          </Button>
+          <Button
+            onClick={
+              this.state.votedDown
+                ? () => this.handleVote(item_id, 1, "votedDown")
+                : () => this.handleVote(item_id, -1, "votedDown")
+            }
+          >
+            Downvote
+          </Button>
+        </ButtonDiv>
       </div>
     );
   }
@@ -39,8 +49,6 @@ class VoterBox extends Component {
     this.setState({ votes, type_article });
   }
   handleVote = (id, inc, toggleVote) => {
-    // const refVote = {votedDown : "votedUp", votedUp: "votedDown"}
-    // if (!this.state[toggleVote] === this.state[refVote[toggleVote]]) inc = inc + inc;
     this.state.type_article
       ? api.sendArticleVote(id, inc)
       : api.sendCommentVote(id, inc);

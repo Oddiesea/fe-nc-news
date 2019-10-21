@@ -1,21 +1,33 @@
 import React, { Component } from "react";
 import { Link } from "@reach/router";
 import VoterBox from "./VoterBox";
+import Card from "../assets/styles/cardStyle";
 import styled from "styled-components";
+
+const ArticleHeader = styled.h2`
+  font-size: 1.7em;
+  text-decoration: underline;
+  font-weight: bold;
+`;
+const DateAndTopic = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const ArticleLink = styled(Link)`
+  font-size: 1.3em;
+  text-decoration: underline;
+`;
+
+const TopicLink = styled(Link)`
+font-size: 1.1em;
+padding-right: 1em;
+`;
 
 class ArticleCard extends Component {
   state = {
     fullCard: false
   };
   render() {
-    const Card = styled.div`
-    margin-right: 10px;
-    padding: 5px 10px;
-    margin: 8px 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 2px 2px 2px #D3D3D3;
-  `;
     const {
       article: {
         article_id,
@@ -31,23 +43,25 @@ class ArticleCard extends Component {
     const bodyStub = this.makeBodyStub(body);
     const { fullCard } = this.state;
     return (
-        <Card>
-          {fullCard ? (
-            <p>{title}</p>
-          ) : (
-            <Link to={`/articles/${article_id}`}>{title}</Link>
-          )}
-          <p> {this.props.fullCard ? body : bodyStub}</p>
-          <p>{author}</p>
+      <Card>
+        {fullCard ? (
+          <ArticleHeader>{title}</ArticleHeader>
+        ) : (
+          <ArticleLink to={`/articles/${article_id}`}>{title}</ArticleLink>
+        )}
+        <p> {this.props.fullCard ? body : bodyStub}</p>
+        <p>{author}</p>
+        {!fullCard && <p>comments : {comment_count}</p>}
+        {fullCard && this.props.user !== "" ? (
+          <VoterBox item_id={article_id} type_article={true} votes={votes} />
+        ) : (
+          <p>Votes: {votes}</p>
+        )}
+        <DateAndTopic>
           <p>{new Date(created_at).toUTCString().substring(5, 22)}</p>
-          <p>topic: {topic}</p>
-          {!fullCard && <p>comments : {comment_count}</p>}
-          {fullCard && this.props.user !== "" ? (
-            <VoterBox item_id={article_id} type_article={true} votes={votes} />
-          ) : (
-            <p>Votes: {votes}</p>
-          )}
-        </Card>
+          <TopicLink to={`/${topic}`}>{topic}</TopicLink>
+        </DateAndTopic>
+      </Card>
     );
   }
 
