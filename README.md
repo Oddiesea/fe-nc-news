@@ -1,6 +1,6 @@
 ## NC-NEWS
 
-A simple, responsive news frontend for a the [be-nc-news](https://github.com/oddiesea/be-nc-news) api.
+A simple, responsive news frontend for a the [be-nc-news](https://github.com/oddiesea/fe-nc-news) api.
 
 Click [here](https://nc-news-front.netlify.com/) to view the live demo.
 

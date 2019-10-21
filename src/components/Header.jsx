@@ -6,7 +6,8 @@ const Header = ({ user }) => {
   const Header = styled.header`
     padding: 0.1em;
     background: #17202a;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     justify-content: space-around;
     position: fixed;
     top: 0;
@@ -16,7 +17,7 @@ const Header = ({ user }) => {
   `;
 
   const Title = styled.h1`
-    grid-column-start: 2;
+    grid-column: 2/3 ;
     font-size: 1.5em;
     text-align: center;
     color: #52be80;
@@ -34,7 +35,10 @@ const Header = ({ user }) => {
   `
 
   const Login = styled.div`
-  justify-content: flex-end;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column-reverse;
   `
   return (
     <Header className="Header">
